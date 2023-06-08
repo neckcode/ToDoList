@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    username: postgres
+    password: 0
+    url: jdbc:postgresql://localhost:5432/todo
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+   # database: postgresql
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
