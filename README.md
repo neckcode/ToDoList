@@ -5,3 +5,4 @@ The application is todo list. Here it has possibility to create, modify, delete 
 - Spring boot 3.1
 - Spring JPA
 - Spring thymeleaf
+- Bootstrap 5.2.3
