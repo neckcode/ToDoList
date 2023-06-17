@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.Map;
 
@@ -24,12 +25,12 @@ public class WorkController {
     @GetMapping("/")
     public String index(@ModelAttribute("work") Work work, Model model) {
         model.addAttribute("works", service.findAll());
-        return "addwork";
+        return "index";
     }
 
     @GetMapping("/work/{id}")
     public String getWork(@PathVariable("id") Long id, Model model) {
-        service.getById(id).ifPresent(w->
+        service.getById(id).ifPresent(w ->
                 model.addAttribute("work", w));
         return "work";
     }
@@ -40,9 +41,24 @@ public class WorkController {
         return "redirect:/";
     }
 
-    @DeleteMapping("/work/{id}")
-    public String deleteWork(@PathVariable Long id) {
+    @GetMapping("/work/edit/{id}")
+    public String showUpdateForm(@ModelAttribute("work") Work work, @PathVariable("id") long id, Model model) {
+        work = service.getById(id).orElseThrow(() -> new IllegalArgumentException("Invalid work Id:" + id));
+        model.addAttribute("work", work);
+        return "work-update";
+    }
+
+    @PostMapping("/work/update/{id}")
+    public String updateWork(@ModelAttribute("work") Work work) {
+        service.save(work);
+        return "redirect:/work/" + work.getId();
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteWork(@ModelAttribute("work") Work work, @PathVariable("id") long id, Model model) {
+        service.getById(id).orElseThrow(() -> new IllegalArgumentException("Invalid work Id:" + id));
         service.delete(id);
-        return "redirect:/";
+        model.addAttribute("works", service.findAll());
+        return "index";
     }
 }
