@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -13,6 +14,10 @@
 </head>
 <body>
 <div class="container-sm my-5">
+    <div class="pull-right" sec:authorize="isAuthenticated()">
+        <p>User: <span th:text="${user.username}"></span></p>
+    <a href="/logout"><span>Logout</span></a>
+    </div>
     <h2 class="mb-5 text-center">TO DO LIST</h2>
     <button type="button" class="btn btn-outline-primary mb-3" data-bs-toggle="collapse"
             data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="collapse1 collapse2">add to do
