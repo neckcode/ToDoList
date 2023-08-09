@@ -13,7 +13,7 @@ import static com.neckginger.todolist.security.model.Role.USER;
 
 @Controller
 @RequiredArgsConstructor
-public class HomeController {
+public class SecurityController {
 
     private final UserService userService;
 
@@ -30,10 +30,10 @@ public class HomeController {
         return "login";
     }
 
-    @GetMapping("/signin")
-    public String signin(Model model) {
+    @GetMapping("/signun")
+    public String signun(Model model) {
         model.addAttribute("user", new UserCreateDto());
-        return "signin";
+        return "signun";
     }
 
     @PostMapping("/signin")
