@@ -19,61 +19,64 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		
-		http
-			.authorizeHttpRequests(authConfig -> {
-				authConfig.requestMatchers(HttpMethod.GET, "/signup","/login", "/error", "/login-error", "/logout", "/css/**").permitAll();
-				authConfig.requestMatchers(HttpMethod.GET, "/user").hasRole("USER");
-				authConfig.requestMatchers(HttpMethod.POST, "/signup").permitAll();
-				authConfig.requestMatchers(HttpMethod.GET, "/admin").hasRole("ADMIN");
-				authConfig.requestMatchers(HttpMethod.GET, "/developer").hasRole("DEVELOPER");
-				authConfig.requestMatchers(HttpMethod.GET, "/users").hasAnyRole("DEVELOPER");
-				authConfig.requestMatchers(HttpMethod.GET, "/authorities").hasAnyRole("DEVELOPER");
-				authConfig.anyRequest().authenticated();
-			})
-			.formLogin(login -> {
-				login.loginPage("/login");
-				login.defaultSuccessUrl("/");
-				login.failureUrl("/login-error");
-				}
-			)
-			.logout(logout -> {
-				logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
-				logout.logoutSuccessUrl("/");
-				logout.deleteCookies("JSESSIONID");
-				logout.invalidateHttpSession(true);
-			});
-		return http.build();
-	}
-	
-	@Bean
-	UserDetailsService myUserDetailsService(UserRepository userRepository) {
-		return new MyUserDetailsService(userRepository);
-	}
-	
-	@Bean
-	BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-	
-	@Bean
-	SecurityEvaluationContextExtension securityEvaluationContextExtension() {
-		return new SecurityEvaluationContextExtension();
-	}
-	
-	@Bean
-	ApplicationListener<AuthenticationSuccessEvent> successEvent() {
-		return event -> {
-			System.out.println("Success Login " + event.getAuthentication().getClass().getSimpleName() + " - " + event.getAuthentication().getName());
-		};
-	}
-	
-	@Bean
-	ApplicationListener<AuthenticationFailureBadCredentialsEvent> failureEvent() {
-		return event -> {
-			System.err.println("Bad Credentials Login " + event.getAuthentication().getClass().getSimpleName() + " - " + event.getAuthentication().getName());
-		};
-	}
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http
+                .authorizeHttpRequests(authConfig -> {
+                    authConfig.requestMatchers(HttpMethod.GET, "/signup", "/login", "/error", "/login-error", "/logout", "/static/style/**").permitAll();
+                    authConfig.requestMatchers(HttpMethod.GET, "/user").hasRole("USER");
+                    authConfig.requestMatchers(HttpMethod.POST, "/signup").permitAll();
+                    authConfig.requestMatchers(HttpMethod.GET, "/admin").hasRole("ADMIN");
+                    authConfig.requestMatchers(HttpMethod.GET, "/developer").hasRole("DEVELOPER");
+                    authConfig.requestMatchers(HttpMethod.GET, "/users").hasAnyRole("DEVELOPER");
+                    authConfig.requestMatchers(HttpMethod.GET, "/authorities").hasAnyRole("DEVELOPER");
+                    authConfig.anyRequest().authenticated();
+                })
+                .formLogin(login -> {
+                            login.loginPage("/login");
+                            login.defaultSuccessUrl("/");
+                            login.failureUrl("/login-error");
+                        }
+                )
+                .cors(cor -> {
+                    cor.disable();
+                })
+                .logout(logout -> {
+                    logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+                    logout.logoutSuccessUrl("/");
+                    logout.deleteCookies("JSESSIONID");
+                    logout.invalidateHttpSession(true);
+                });
+        return http.build();
+    }
+
+    @Bean
+    UserDetailsService myUserDetailsService(UserRepository userRepository) {
+        return new MyUserDetailsService(userRepository);
+    }
+
+    @Bean
+    BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    SecurityEvaluationContextExtension securityEvaluationContextExtension() {
+        return new SecurityEvaluationContextExtension();
+    }
+
+    @Bean
+    ApplicationListener<AuthenticationSuccessEvent> successEvent() {
+        return event -> {
+            System.out.println("Success Login " + event.getAuthentication().getClass().getSimpleName() + " - " + event.getAuthentication().getName());
+        };
+    }
+
+    @Bean
+    ApplicationListener<AuthenticationFailureBadCredentialsEvent> failureEvent() {
+        return event -> {
+            System.err.println("Bad Credentials Login " + event.getAuthentication().getClass().getSimpleName() + " - " + event.getAuthentication().getName());
+        };
+    }
 }
