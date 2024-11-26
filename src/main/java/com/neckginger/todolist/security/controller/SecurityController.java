@@ -30,13 +30,13 @@ public class SecurityController {
         return "login";
     }
 
-    @GetMapping("/signun")
-    public String signun(Model model) {
+    @GetMapping("/signup")
+    public String signup(Model model) {
         model.addAttribute("user", new UserCreateDto());
-        return "signun";
+        return "signup";
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/signup")
     public String signinCreate(@ModelAttribute("user") UserCreateDto user,
                                Model model) {
         user.setRole(USER);

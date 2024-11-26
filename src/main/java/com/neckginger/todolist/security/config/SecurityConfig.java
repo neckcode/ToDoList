@@ -24,9 +24,9 @@ public class SecurityConfig {
 		
 		http
 			.authorizeHttpRequests(authConfig -> {
-				authConfig.requestMatchers(HttpMethod.GET, "/signin","/login", "/error", "/login-error", "/logout", "/css/**").permitAll();
+				authConfig.requestMatchers(HttpMethod.GET, "/signup","/login", "/error", "/login-error", "/logout", "/css/**").permitAll();
 				authConfig.requestMatchers(HttpMethod.GET, "/user").hasRole("USER");
-				authConfig.requestMatchers(HttpMethod.POST, "/signin").permitAll();
+				authConfig.requestMatchers(HttpMethod.POST, "/signup").permitAll();
 				authConfig.requestMatchers(HttpMethod.GET, "/admin").hasRole("ADMIN");
 				authConfig.requestMatchers(HttpMethod.GET, "/developer").hasRole("DEVELOPER");
 				authConfig.requestMatchers(HttpMethod.GET, "/users").hasAnyRole("DEVELOPER");
