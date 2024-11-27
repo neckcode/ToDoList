@@ -1,4 +1,4 @@
-# ToDo List
+# Task manager - todo 
 The application is todo list. Here it has possibility to create, modify, delete your business 
 
 ### Technologies
