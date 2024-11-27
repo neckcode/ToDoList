@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>TO DO LIST</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <script th:href="@{/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+<div class="container-sm my-5">
+    <div class="pull-right" sec:authorize="isAuthenticated()">
+        <p>User: <span th:text="${user.username}"></span></p>
+    <a href="/logout"><span>Logout</span></a>
+    </div>
+    <h2 class="mb-5 text-center">TO DO LIST</h2>
+    <button type="button" class="btn btn-outline-primary mb-3" data-bs-toggle="collapse"
+            data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="collapse1 collapse2">add to do
+    </button>
+    <div class="row">
+        <div class="col-md-6">
+            <form action="#" th:action="@{/work}" th:object="${work}" method="post">
+                <div class="row collapse multi-collapse" id="collapse1">
+                    <div class="form-group col-md-6">
+                        <label for="title" class="col-form-label mb-1">Title</label>
+                        <input class="form-control" id="title" placeholder="Title" th:field="*{title}" type="text">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="description" class="col-form-label mb-1">Description</label>
+                        <input class="form-control" id="description" placeholder="Description"
+                               th:field="*{description}"
+                               type="text">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="status" class="col-form-label mb-1">Status</label>
+                        <select class="form-select" aria-label="Default select example"
+                                type="text" id="status" placeholder="Status" th:field="*{status}">
+                            <option selected value="OPEN">started</option>
+                            <option value="WIP">work in progress</option>
+                            <option value="CLOSED">finished</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-2 mb-5 collapse multi-collapse" id="collapse2">
+                        <input type="submit" class="btn btn-primary" value="Add">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col">
+            <div class="text-center p-3 mb-2 bg-success text-white rounded-pill">
+                <span>OPENED</span>
+            </div>
+            <div th:each="w : ${works}" class="mb-2">
+                <a th:href="@{/work/{id}(id=${w.id})}">
+                    <span th:text="${w.title}" th:if="${w.getStatus().toString().equals('OPEN')}"></span>
+                </a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-center p-3 mb-2 bg-warning text-dark rounded-pill">
+                <span>WIP</span>
+            </div>
+            <div th:each="w : ${works}" class="mb-2">
+                <a th:href="@{/work/{id}(id=${w.id})}">
+                    <span th:text="${w.title}" th:if="${w.getStatus().toString().equals('WIP')}"></span>
+                </a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-center p-3 mb-2 bg-danger text-white rounded-pill">
+                <span>CLOSED</span>
+            </div>
+            <div th:each="w : ${works}" class="mb-2">
+                <a th:href="@{/work/{id}(id=${w.id})}">
+                    <span th:text="${w.title}" th:if="${w.getStatus().toString().equals('CLOSED')}"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

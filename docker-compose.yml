@@ -1,0 +1,32 @@
+version: '3.9'
+
+networks:
+  default:
+    name: todo
+
+services:
+  postgres_service:
+    image: postgres:15.1
+    container_name: ps-postgres
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_PASSWORD=0
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=todo
+    volumes:
+      - ~/temp/postgres/power-storage:/var/lib/postgresql/data
+
+  todo-service:
+    environment:
+      - POSTGRES_URL=jdbc:postgresql://postgres_service/todo
+    depends_on:
+      postgres_service:
+        condition: service_started
+    image: neckcode/todo:latest
+    ports:
+      - 8080:8080
+    expose:
+      - 8080

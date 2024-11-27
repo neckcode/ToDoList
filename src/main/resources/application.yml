@@ -2,13 +2,15 @@ spring:
   datasource:
     username: postgres
     password: 0
-    url: jdbc:postgresql://localhost:5432/todo
+    url: ${POSTGRES_URL}
   jpa:
     show-sql: true
     generate-ddl: true
     hibernate:
-      ddl-auto: create
-   # database: postgresql
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  thymeleaf:
+    cache: false
+server:
+  port: ${TODO_PORT:8080}

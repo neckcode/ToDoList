@@ -1,0 +1,11 @@
+@startuml
+
+class "user" as user
+
+class "work" as work
+{
+string state
+string description
+}
+
+@enduml

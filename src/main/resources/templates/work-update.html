@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>WORK UPDATE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <script th:href="@{/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <form action="#" th:action="@{/work/update/{id}(id=${work.id})}" th:object="${work}" method="post">
+                <div class="form-group col-md-6">
+                    <label for="title" class="col-form-label">Title</label>
+                    <input class="form-control" id="title" placeholder="Title" th:field="*{title}" type="text">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="description" class="col-form-label">Description</label>
+                    <input class="form-control" id="description" placeholder="Description"
+                           th:field="*{description}"
+                           type="text">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="status" class="col-form-label">Status</label>
+                    <select class="form-select" aria-label="Default select example"
+                            type="text" id="status" placeholder="Status" th:field="*{status}">
+                        <option selected value="OPEN">started</option>
+                        <option value="WIP">work in progress</option>
+                        <option value="CLOSED">finished</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-5">
+                        <input type="submit" class="btn btn-primary" value="update">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
