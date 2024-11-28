@@ -17,5 +17,5 @@ jobs:
               password: dckr_pat_ozFUZZV0q-8JuvTeMMv2XxKhOys
           - name: Build and push
             run: |
-                docker build --tag=neckcpde:latest ./../../
+                docker build --tag=neckcpde:latest ./
                 docker push neckcpde:latest
