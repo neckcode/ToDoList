@@ -25,4 +25,4 @@ jobs:
               context: .
               file: ./Dockerfile
               push: true
-              tags: $/todo:latest
+              tags: neckcode/todo:latest
