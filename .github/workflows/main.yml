@@ -28,7 +28,7 @@ jobs:
           - name: Build and push
             run: |
                 echo 
-                mvn clear
+                mvn clean
                 mvn package
                 docker build . -t neckcode/todo:latest 
                 docker push neckcode/todo:latest
