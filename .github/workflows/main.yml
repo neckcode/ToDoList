@@ -9,9 +9,6 @@ jobs:
   docker:
         name: Build Docker image
         runs-on: ubuntu-latest
-        env:
-          USER: ${{ vars.DOCKERHUB_USERNAME }}
-          SECRET: ${{ secrets.DOCKERHUB_TOKEN }}
         steps:
           - name: vars
             run: |
@@ -21,8 +18,8 @@ jobs:
             uses: docker/login-action@v3
             with:
               secret:
-              username: $USER
-              password: $SECRET
+              username: ${{ vars.DOCKERHUB_USERNAME }}
+              password: ${{ secrets.DOCKERHUB_TOKEN }}
           - name: Build and push
             run: |
                 echo 
