@@ -12,6 +12,7 @@ jobs:
         steps:
           - name: vars
             run: |
+              pwd
               echo "user" ${{ vars.DOCKERHUB_USERNAME }}
               echo "secret" ${{ secrets.DOCKERHUB_TOKEN }}
           - name: Login to Docker Hub
