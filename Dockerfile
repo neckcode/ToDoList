@@ -1,4 +1,4 @@
 FROM openjdk:17-jdk-alpine
-LABEL maintainer=mcnz.com
+LABEL maintainer=neckcode.github.io
 COPY target/todolist-0.0.1.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
