@@ -13,7 +13,7 @@ jobs:
           - name: vars
             run: |
               pwd
-              ls
+              ls -a
               dir
               echo "user" ${{ vars.DOCKERHUB_USERNAME }}
               echo "secret" ${{ secrets.DOCKERHUB_TOKEN }}
