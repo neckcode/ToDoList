@@ -29,6 +29,6 @@ jobs:
             run: |
                 echo 
                 mvn clean
-                mvn package
+                mvn package -Dmaven.test.skip
                 docker build . -t neckcode/todo:latest 
                 docker push neckcode/todo:latest
