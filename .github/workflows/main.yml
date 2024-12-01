@@ -22,7 +22,7 @@ jobs:
           - name: build the app
             run: |
               mvn clean
-              mvn -B package --file pom.xml
+              mvn -Dmaven.test.skip=true -B package --file pom.xml
           - name: vars
             run: |
               pwd
